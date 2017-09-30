@@ -97,7 +97,7 @@ They also determine wich type of values will be accepted for their modifiers:
 - A `null` or string default value will make the modifier accepting only string and `null` values
 - A `true` or `false` default value will make the modifier accepting only boolean values
 
-You can override these default values calling a component and specifying its corresponding props:
+You can override these default values (but not their type) calling a component and specifying its corresponding props:
 ```vue
 # src/app.vue
 
