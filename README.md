@@ -92,7 +92,7 @@ export default {
 ...
 ```
 
-The values you put in `data.modifiers` is used as default values for their modifier.
+The values you put in `data.modifiers` are used as default values for their modifier.
 They also determine wich type of values will be accepted for this modifier:
 - A `null` or string default value will make the modifier accepting only string and `null` values
 - A `true` or `false` default value will make the modifier accepting only boolean values
