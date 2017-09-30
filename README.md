@@ -84,7 +84,7 @@ export default {
 # src/components/btn.vue
 
 <template>
-  <span class="btn" @mouseover="this.own.size = 'large'" @click="this.is.primary = !this.is.primary">
+  <span class="btn" @mouseover="own.size = 'large'" @click="is.primary = !is.primary">
     <slot></slot>
   </span>
 </template>
