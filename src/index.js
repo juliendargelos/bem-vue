@@ -20,10 +20,6 @@ export default {
     this.initModifiers()
   },
 
-  init (vue) {
-    this.methods.initModifiers.call(vue)
-  },
-
   methods: {
     initModifiers () {
       for(var modifier in this.modifiers) {
