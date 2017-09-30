@@ -5,6 +5,7 @@ This Vue mixin makes easier manipulating BEM block with Vue component.
 ### Install the package:
 ```
 npm install https://github.com/juliendargelos/bem-vue.git --save
+```
 
 
 ### Import and include the mixin in a component:
