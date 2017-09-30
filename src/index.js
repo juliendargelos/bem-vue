@@ -16,7 +16,7 @@ export default {
     }
   },
 
-  created () {
+  mounted () {
     this.initModifiers()
   },
 
