@@ -68,10 +68,10 @@ export default {
     setBooleanModifier (modifier, value) {
       if (!this.$el) return
 
-      value = !!v
+      value = !!value
 
-      if(this.getBooleanModifier(modifier) !== v) {
-        if(v) this.$el.className += ' '+this.booleanModifierString(modifier)
+      if(this.getBooleanModifier(modifier) !== value) {
+        if(value) this.$el.className += ' '+this.booleanModifierString(modifier)
         else this.$el.className = this.$el.className.replace(this.booleanModifierPattern(modifier), '').trim()
       }
     },
@@ -94,7 +94,7 @@ export default {
 
       if (this.getStringModifier(modifier) !== value) {
         this.$el.className = this.$el.className.replace(this.stringModifierPattern(modifier), '').trim()
-        if (v) this.$el.className += ' '+this.stringModifierString(modifier, value)
+        if (value) this.$el.className += ' '+this.stringModifierString(modifier, value)
       }
     }
   }
