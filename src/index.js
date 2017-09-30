@@ -10,7 +10,7 @@ export default {
 
     modifiersDescriptor () {
       var descriptor = {}
-      for (var modifier in this.$modifiers) descriptor[modifier] = this.modifierDescriptor(modifier)
+      for (var modifier in this.modifiers) descriptor[modifier] = this.modifierDescriptor(modifier)
 
       return descriptor
     }
@@ -22,8 +22,8 @@ export default {
 
   methods: {
     initModifiers () {
-      for(var modifier in this.$modifiers) {
-        this.setModifier(modifier, this[modifier] === undefined ? this.$modifiers[modifier] : this[modifier])
+      for(var modifier in this.modifiers) {
+        this.setModifier(modifier, this[modifier] === undefined ? this.modifiers[modifier] : this[modifier])
       }
     },
 
@@ -45,7 +45,7 @@ export default {
     },
 
     modifierType(modifier) {
-      return this.modifierValueType(this.$modifiers[modifier])
+      return this.modifierValueType(this.modifiers[modifier])
     },
 
     modifierValueType (value) {
