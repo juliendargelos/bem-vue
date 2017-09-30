@@ -81,7 +81,7 @@ export default {
     },
 
     stringModifierPattern (modifier) {
-      return new RegExp('\\b' + this.stringModifierString(modifier, '([^\\s]+)'))
+      return new RegExp('\\b' + this.stringModifierString(modifier, '([^\\s]+)') + '\\b')
     },
 
     getStringModifier (modifier) {
