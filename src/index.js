@@ -27,14 +27,18 @@ export default {
 
       for (var name in elements) {
         object[name] = {}
-        this.setModifiersDescriptor(
-          object[name],
-          () => parent.querySelector('.' + this.elementString(block, name)),
-          this.elementString(block, name),
-          elements[name],
-          override
-        )
+        this.setElementModifiersDescriptor(object, name, parent, block, elements[name], override)
       }
+    },
+
+    setElementModifiersDescriptor (object, name, parent, block, element, override) {
+      this.setModifiersDescriptor(
+        object[name],
+        () => parent.querySelector('.' + this.elementString(block, name)),
+        this.elementString(block, name),
+        element,
+        override
+      )
     },
 
     elementString (block, name) {
