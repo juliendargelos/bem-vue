@@ -17,17 +17,9 @@ export default {
     },
 
     setElementsDescriptor (object, parent, block, elements) {
-      var override
-
       for (var name in elements) {
-        override = {}
         object[name] = {}
-
-        for (var modifier in elements[name]) {
-          if(object[name+'-'+modifier] !== undefined) override[modifier] = object[name+'-'+modifier]
-        }
-
-        this.setElementModifiersDescriptor(object, name, parent, block, elements[name], override)
+        this.setElementModifiersDescriptor(object, name, parent, block, elements[name])
       }
     },
 
@@ -46,15 +38,20 @@ export default {
     },
 
     setModifiersDescriptor (object, node, name, modifiers, override) {
+      var prefix = name.split('__').slice(1).join('-')
+      if (prefix) prefix += '-'
+      var value
       override = Object.assign({}, override || object)
-      Object.defineProperties(object, this.modifiersDescriptor(node, name, modifiers, override))
+
+      Object.defineProperties(object, this.modifiersDescriptor(node, name, modifiers))
 
       for(var modifier in modifiers) {
-        object[modifier] = override[modifier] === undefined ? modifiers[modifier] : override[modifier]
+        value = override['m-' + prefix + modifier]
+        object[modifier] = value === undefined ? modifiers[modifier] : value
       }
     },
 
-    modifiersDescriptor  (node, name, modifiers, override) {
+    modifiersDescriptor  (node, name, modifiers) {
       var descriptor = {}
 
       for (var modifier in modifiers) {
