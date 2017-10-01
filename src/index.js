@@ -7,13 +7,11 @@ export default {
     initBem () {
       if (typeof this.bem !== 'object' || this.bem === null) return
 
-      if (typeof this.bem.modifiers === 'object' && this.bem.modidifers !== null) {
-        this.setModifiersDescriptor(this, this.$el, this.bem.name, this.bem.modifiers)
-      }
-
-      if (typeof this.bem.elements === 'object' && this.bem.elements !== null) {
-        this.setElementsDescriptor(this, this.$el, this.bem.name, this.bem.elements)
-      }
+      ['modifiers', 'elements'].map(setter => {
+        if (typeof this.bem[setter] === 'object' && this.bem[setter] !== null) {
+          this['set' + setter[0].toUpperCase() + setter.substring(1)](this, this.$el, this.bem.name, this.bem[setter])
+        }
+      })
     },
 
     setElementsDescriptor (object, parent, block, elements) {
@@ -44,8 +42,6 @@ export default {
       var key, value
       override = Object.assign({}, override || object._props)
 
-      console.log(override)
-
       Object.defineProperties(object, this.modifiersDescriptor(node, name, modifiers))
 
       for (var modifier in modifiers) {
@@ -71,22 +67,16 @@ export default {
     },
 
     modifierDescriptor (node, name, modifier, base) {
-      if (this.modifierValueType(base) === 'boolean') {
-        return this.booleanModifierDescriptor(node, name, modifier)
-      } else {
-        return this.stringModifierDescriptor(node, name, modifier)
+      var type = this.modifierValueType(base)
+      var method = type[0].toUpperCase() + type.substring(1) + 'Modifier'
+      return {
+        get: () => this['get' + method](node, name, modifier),
+        set: value => this['set' + method](node, name, modifier, value)
       }
     },
 
     modifierValueType (value) {
       return [true, false].includes(value) ? 'boolean' : 'string'
-    },
-
-    booleanModifierDescriptor (node, name, modifier) {
-      return {
-        get: () => this.getBooleanModifier(node, name, modifier),
-        set: value => this.setBooleanModifier(node, name, modifier, value)
-      }
     },
 
     booleanModifierString (name, modifier) {
@@ -112,13 +102,6 @@ export default {
       if(node && this.getBooleanModifier(node, name, modifier) !== value) {
         if(value) node.className += ' '+this.booleanModifierString(name, modifier)
         else node.className = node.className.replace(this.booleanModifierPattern(name, modifier), '').trim()
-      }
-    },
-
-    stringModifierDescriptor (node, name, modifier) {
-      return {
-        get: () => this.getStringModifier(node, name, modifier),
-        set: value => this.setStringModifier(node, name, modifier, value)
       }
     },
 
