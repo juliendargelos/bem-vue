@@ -13,6 +13,7 @@ npm install https://github.com/juliendargelos/bem-vue.git --save
 # src/components/btn.vue
 <template>
   <span class="btn">
+    <span class="btn__icon"></span>
     <slot></slot>
   </span>
 </template>
@@ -48,6 +49,16 @@ export default {
     &--large
       font-size: 18px
 
+  &__icon
+    margin-right: 10px
+    display: inline-block
+    &--type
+      &--add
+        content: '+'
+
+      &--remove
+        content: '×'
+
 </style>
 ```
 
@@ -65,11 +76,20 @@ export default {
 
   data: function () {
     return {
-      bem: 'btn',
-      modifiers: {
-        primary: false,
-        danger: false,
-        size: null
+      bem: {
+        name: 'btn',
+
+        modifiers: {
+          primary: false,
+          danger: false,
+          size: null
+        },
+
+        elements: {
+          icon: {
+            type: null
+          }
+        }
       }
     }
   }
@@ -84,7 +104,8 @@ export default {
 # src/components/btn.vue
 
 <template>
-  <span class="btn" @mouseover="own.size = 'large'" @click="is.primary = !is.primary">
+  <span class="btn" @mouseover="size = 'large'" @click="primary = !primary">
+    <span class="btn__icon"></span>
     <slot></slot>
   </span>
 </template>
@@ -102,8 +123,16 @@ You can override these default values (but not their type) calling a component a
 # src/app.vue
 
 <template>
-  <btn :danger="true" size="small"></btn>
+  <btn danger="true" size="small" icon-type="remove"></btn>
 </template>
+
+<script>
+<script>
+import Bem from 'bem-vue'
+
+export default {
+  mixins: [Bem],
+  props: ['danger', 'size', 'icon-type']
 
 ...
 ```

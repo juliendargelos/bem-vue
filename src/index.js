@@ -23,13 +23,13 @@ export default {
       }
     },
 
-    setElementModifiersDescriptor (object, name, parent, block, element, override) {
+    setElementModifiersDescriptor (object, name, parent, block, element) {
       this.setModifiersDescriptor(
         object[name],
         () => parent.querySelector('.' + this.elementString(block, name)),
         this.elementString(block, name),
         element,
-        override
+        object._props
       )
     },
 
@@ -38,15 +38,18 @@ export default {
     },
 
     setModifiersDescriptor (object, node, name, modifiers, override) {
-      var prefix = name.split('__').slice(1).join('-')
-      if (prefix) prefix += '-'
-      var value
-      override = Object.assign({}, override || object)
+      var prefix = name.split('__').slice(1).map(part => part[0].toUpperCase() + part.substring(1)).join('')
+      var key, value
+      override = Object.assign({}, override || object._props)
+
+      console.log(override)
 
       Object.defineProperties(object, this.modifiersDescriptor(node, name, modifiers))
 
       for(var modifier in modifiers) {
-        value = override['m-' + prefix + modifier]
+        key = prefix + modifier[0].toUpperCase() + modifier.substring(1)
+        key = key[0].toLowerCase() + key.substring(1)
+        value = override[key]
         object[modifier] = value === undefined ? modifiers[modifier] : value
       }
     },
@@ -98,7 +101,7 @@ export default {
     setBooleanModifier (node, name, modifier, value) {
       if (!node) return
       if(typeof node === 'function') node = node()
-      value = !!value
+      value = value === 'false' ? false : !!value
 
       if(node && this.getBooleanModifier(node, name, modifier) !== value) {
         if(value) node.className += ' '+this.booleanModifierString(name, modifier)
