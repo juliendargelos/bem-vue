@@ -17,16 +17,16 @@ export default {
     },
 
     setElementsDescriptor (object, parent, block, elements) {
-      var override = {}
-
-      for (var property in object) {
-        if (property.match(/^is[A-Z]/) !== null) {
-          override[property.substring(2, 1).toLowerCase() + property.substring(4)] = object[property]
-        }
-      }
+      var override
 
       for (var name in elements) {
+        override = {}
         object[name] = {}
+
+        for (var modifier in elements[name]) {
+          if(object[name+'-'+modifier] !== undefined) override[modifier] = object[name+'-'+modifier]
+        }
+
         this.setElementModifiersDescriptor(object, name, parent, block, elements[name], override)
       }
     },
