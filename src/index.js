@@ -42,7 +42,7 @@ export default {
     },
 
     setModifiersDescriptor (object, node, name, modifiers, override) {
-      override = Object.Assign({}, override || object)
+      override = Object.assign({}, override || object)
       Object.defineProperties(object, this.modifiersDescriptor(node, name, modifiers, override))
 
       for(var modifier in modifiers) {
