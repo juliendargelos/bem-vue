@@ -74,8 +74,8 @@ export default {
 
     booleanModifierDescriptor (node, name, modifier) {
       return {
-        get: () => this.getBooleanModifier(node, modifier),
-        set: value => this.setBooleanModifier(node, modifier, value)
+        get: () => this.getBooleanModifier(node, name, modifier),
+        set: value => this.setBooleanModifier(node, name, modifier, value)
       }
     },
 
@@ -107,8 +107,8 @@ export default {
 
     stringModifierDescriptor (node, name, modifier) {
       return {
-        get: () => this.getStringModifier(node, modifier),
-        set: value => this.setStringModifier(node, modifier, value)
+        get: () => this.getStringModifier(node, name, modifier),
+        set: value => this.setStringModifier(node, name, modifier, value)
       }
     },
 
