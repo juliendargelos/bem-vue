@@ -18,8 +18,10 @@ export default {
 
     setElementsDescriptor (object, parent, block, elements) {
       for (var name in elements) {
-        object[name] = {}
-        this.setElementModifiersDescriptor(object, name, parent, block, elements[name])
+        if (element.hasOwnProperty(name)) {
+          object[name] = {}
+          this.setElementModifiersDescriptor(object, name, parent, block, elements[name])
+        }
       }
     },
 
@@ -46,11 +48,13 @@ export default {
 
       Object.defineProperties(object, this.modifiersDescriptor(node, name, modifiers))
 
-      for(var modifier in modifiers) {
-        key = prefix + modifier[0].toUpperCase() + modifier.substring(1)
-        key = key[0].toLowerCase() + key.substring(1)
-        value = override[key]
-        object[modifier] = value === undefined ? modifiers[modifier] : value
+      for (var modifier in modifiers) {
+        if (modifiers.hasOwnProperty(modifier)) {
+          key = prefix + modifier[0].toUpperCase() + modifier.substring(1)
+          key = key[0].toLowerCase() + key.substring(1)
+          value = override[key]
+          object[modifier] = value === undefined ? modifiers[modifier] : value
+        }
       }
     },
 
@@ -58,7 +62,9 @@ export default {
       var descriptor = {}
 
       for (var modifier in modifiers) {
-        descriptor[modifier] = this.modifierDescriptor(node, name, modifier, modifiers[modifier])
+        if (modifiers.hasOwnProperty(modifier)) {
+          descriptor[modifier] = this.modifierDescriptor(node, name, modifier, modifiers[modifier])
+        }
       }
 
       return descriptor
