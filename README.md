@@ -1,5 +1,6 @@
+<p align="right"><a href="https://codeclimate.com/github/juliendargelos/bem-vue"><img src="https://codeclimate.com/github/juliendargelos/bem-vue/badges/gpa.svg" /></a></p>
+
 # BEM Vue
-This Vue mixin makes easier manipulating BEM block with Vue component.
 
 ## Installation
 ### Install the package:
@@ -126,7 +127,6 @@ You can override these default values (but not their type) calling a component a
   <btn danger="true" size="small" icon-type="remove"></btn>
 </template>
 
-<script>
 <script>
 import Bem from 'bem-vue'
 
