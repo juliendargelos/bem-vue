@@ -130,6 +130,8 @@ export default {
     setStringModifier (node, name, modifier, value) {
       if (!node) return
       if(typeof node === 'function') node = node()
+      value = value + ''
+      value = value.match(/\s/) !== null ? null : value || null
 
       if (node && this.getStringModifier(node, name, modifier) !== value) {
         node.className = node.className.replace(this.stringModifierPattern(name, modifier), '').trim()
